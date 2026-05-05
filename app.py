@@ -1,9 +1,7 @@
-
 import streamlit as st
 import pickle
 import os
 import re
-import spacy
 import pdfplumber
 from sentence_transformers import SentenceTransformer, util
 
@@ -21,13 +19,12 @@ st.set_page_config(
 # ============================================================
 @st.cache_resource
 def load_models():
-    nlp = spacy.load("en_core_web_sm")
     sbert = SentenceTransformer('all-MiniLM-L6-v2')
     clf = pickle.load(open('models/rf_classifier.pkl', 'rb'))
     tfidf = pickle.load(open('models/tfidf_vectorizer.pkl', 'rb'))
-    return nlp, sbert, clf, tfidf
+    return sbert, clf, tfidf
 
-nlp, sbert_model, clf, tfidf = load_models()
+sbert_model, clf, tfidf = load_models()
 
 # ============================================================
 # SKILLS DATABASE
